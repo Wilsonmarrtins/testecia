@@ -36,5 +36,27 @@ namespace TesteSeusConhecimentos.Entities
             return criarSession().OpenSession();
         }
 
+
+        public static ISessionFactory criarSession2()
+        {
+
+            if (session != null)
+                return session;
+
+            IPersistenceConfigurer configDB = MsSqlConfiguration.MsSql2012.ConnectionString(connectionString);
+
+            var configMap = Fluently.Configure().Database(configDB).Mappings(c => c.FluentMappings.AddFromAssemblyOf<Mapping.EnterpriseMap>());
+            session = configMap.BuildSessionFactory();
+
+            return session;
+
+        }
+
+
+        public static ISession abrirSession2()
+        {
+            return criarSession2().OpenSession();
+        }
+
     }
 }
